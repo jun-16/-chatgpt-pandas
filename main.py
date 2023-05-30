@@ -10,11 +10,11 @@ from langchain.agents import create_pandas_dataframe_agent
 from langchain.schema import HumanMessage
 
 ### ローカル実行の場合の環境変数読み込み
-from dotenv import load_dotenv
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
 ### Sreamlit Cloudにデプロイする場合の環境変数読み込み
-# os.environ['OPENAI_API_KEY'] = st.secrets.OpenAIAPI.openai_api_key
+os.environ['OPENAI_API_KEY'] = st.secrets.OpenAIAPI.openai_api_key
 
 df = pd.DataFrame()
 # 画面UI定義-------------------------------------------------------------------------------------
