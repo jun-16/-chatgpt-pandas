@@ -9,12 +9,19 @@ from langchain import OpenAI
 from langchain.agents import create_pandas_dataframe_agent
 from langchain.schema import HumanMessage
 
-### ローカル実行の場合の環境変数読み込み
+### 環境変数設定
+## ローカル実行の場合
 # from dotenv import load_dotenv
 # load_dotenv()
-
-### Sreamlit Cloudにデプロイする場合の環境変数読み込み
+## Sreamlit Cloudにデプロイする場合
 os.environ['OPENAI_API_KEY'] = st.secrets.OpenAIAPI.openai_api_key
+
+### モデル設定
+## ローカル実行の場合
+# model_name="gpt-3.5-turbo"
+# model_name="text-davinci-003"
+## Sreamlit Cloudにデプロイする場合
+model_name=st.secrets.OpenAIModel.model_name
 
 df = pd.DataFrame()
 # 画面UI定義-------------------------------------------------------------------------------------
@@ -38,7 +45,7 @@ with col2:
 # -------------------------------------------------------------------------------------------
 
 # ChatGPT-3.5のモデルのインスタンスの作成
-llm = OpenAI(model_name="gpt-3.5-turbo", temperature=0.2)
+llm = OpenAI(model_name=model_name, temperature=0.2)
 # llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
 agent = create_pandas_dataframe_agent(llm, df, verbose=True)
 
@@ -64,6 +71,7 @@ if search_button:
     else:
         #「テーブル形式で出力」チェックボックスがチェックされていない場合の検索処理
         final_input = text_input + ' Give it back in japanese.'
+        # final_input = text_input
         output = agent.run(final_input)
         # メッセージ形式で取得結果を表示
         message(output, is_user=False, key=1, avatar_style="bottts-neutral", seed='Aneka')

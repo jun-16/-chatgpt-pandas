@@ -5,3 +5,5 @@ openai
 python-dotenv
 pandas
 tabulate
+num2words
+googletrans
